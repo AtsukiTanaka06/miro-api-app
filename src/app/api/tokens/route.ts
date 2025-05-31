@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { randomBytes } from "crypto";
 import { cookies } from "next/headers";
 
-export function getSupabaseClient() {
+function getSupabaseClient() {
   const cookieStore = cookies();
   return createRouteHandlerClient({ cookies: () => cookieStore });
 }
@@ -92,7 +92,7 @@ export async function GET() {
 
     const {
       data: { user },
-    } = await (await supabase).auth.getUser();
+    } = await supabase.auth.getUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -132,7 +132,7 @@ export async function DELETE(request: Request) {
 
     const {
       data: { user },
-    } = await (await supabase).auth.getUser();
+    } = await supabase.auth.getUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
